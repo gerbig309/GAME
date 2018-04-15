@@ -1,1 +1,17 @@
-This will be a make file!
+# Variablee
+CC = gcc
+CFLAGS = -Wall -Wextra -std=cll -pedantic -g
+LDLIBS = -lm
+PROG = array_test
+SRC = $(PROG).c game.c
+HDR = game.h
+OBJ = $(SRC:.c=.o)
+
+# Targets
+$(PROG): $(OBJ)
+$(OBJ): $(HDR)
+TAGS: $(SRC) $(HDR)
+        etags $^
+.PHONY: clean
+clean:
+        $(RM) $(PROG) $(OBJ)
