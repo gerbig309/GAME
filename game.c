@@ -17,35 +17,27 @@
     
    
   };
-  typedef struct_player player;
-/* syntax for array of events
-typedef void (*eventFunction)(int x);
+typedef struct_player player;
 
-void event1 ()
-{
-    printf("Function a: %d\n", x);
-}
 
-void event2 ()
-{
-    printf("Function b: %d\n", x);
-}
-
-int main(int argc, char **argv)
-{
-    eventFunction *eventArray = (eventFunction *)malloc(sizeof(eventFunction*) * 2);
-    eventArray[0] = (eventFunction)&event1;
-    eventArray[1] = (eventFunction)&event2;
-
-    eventArray[0]();
-    eventArray[1]();
-
+int event1(player (*user)) {
     return 0;
 }
 
-*/
+int event2(player (*user)) {
+    return 0;;
+}
 
+int event3(player (*user)) {
+    return 0;;
+}
 
+typedef int (*f)(player (*user));                 //declare typdef
+//not currently  scaled for full implementation, just proof of concept/syntax
+// in actual implementation events will exist in their own library for scalable implementation
+
+f func[3] = {&event1, &event2, &event3};      //make array func of type f,
+                                            //the pointer to a function
 int coup(){
   int threshold = 3 + user->turns / 5;
   int badnews = RNG();
@@ -67,7 +59,7 @@ int coup(){
       return -2;
     }
   }
-  printf("Your pockets are full and your country is happy...for now.");
+  printf("Your country is happy...for now.");
   return 0;
 }
     
@@ -81,8 +73,8 @@ int RNG(){ // assign a variable like so: n = RNG()
 
 void turnEnd(){
   user->turns += 1;
-  printf("Your reputation: Military:%d Oligarchy:%d People:%d\nNational Budget:$%f billion."
-         "\nTurn number:%d\n",user->military,user->oligarchy,user->people,user->money,user->turns);
+  printf("Your reputation: Military:%d Oligarchy:%d People:%d\n"
+         "\nTurn number:%d\n",user->military,user->oligarchy,user->people,,user->turns);
 }
 
 int parseArg(){
@@ -128,6 +120,7 @@ int parseArg(){
     printf("options: yes/no/quit");
     return -1;
     }
+        
    int typeEvent (int* eventNumber){
      // prompts which type of event is wanted and changes what value the random number generater generates based on the response
     char response [5];
@@ -149,6 +142,9 @@ int parseArg(){
       *eventNumber = random %5 + 10;
       return 0;
     }
+    if (strngcmp (response,"Q"){
+      return -2;
+    }
     return -1;
    }
         
@@ -166,20 +162,28 @@ int parseArg(){
     printf("Welcome to our game! In this, you are a dictator trying not to be overthrown. To do this, you will have to make decisions to balance your reputaion between the people, military, and the oligarchy. Each turn you will decide where you want to go, and based on the location, be given an event that you will respond to. Based on your response, your reputation with each faction will change. The lower yor reputation with any given faction, the more likely you will be overthrown. The game gets more difficult over time, and the longer your reign, the better you must maintain your reputation. The goal of the game is to last as long as possible without being overthrown. Good luck!\n");
     
   int typeErr=0;
-  int random;
-  int eventErr
+  int eventErr=0;
   int eventNumber=-1;
+  int revolt = 0;
   while (1){ //Starts loop to play game. Loop will continue until fail condition met
   typeErr = typeEvent(&eventNumber);
     //propts user with which sect to see in your office
      if(typeErr==0 && eventNumber >=0){
        //if typeEvent is successful continue if not keep looping and calling typeEvent
-       while(typeErr!=1){
-         // err=1 denotes a successful iteration of eventSelect
+       while(1){
+         // typeErr=1 denotes a successful iteration of typeEvent
        eventErr=f[eventNumber](player (*user));
-         if(eventErr==-2) break;
+       revolt=coup(player (*user));
+         if(eventErr==-2||revolt==-2) break;
+         if(eventErr==1){
+           endTurn();
+           break;
+         }
+         //eventErr denotes a successful iteration of the event function
+         //if the event function doesn't get a valid input it will keep prompting
+         //the user with the same prompt
        }
-       if(typeErr||eventErr==-2)break;
+       if(typeErr==-2||eventErr==-2||revolt==-2)break;
      }
     //only way out tof the loop is quitting or losing
     printf("You made it all the way to turn %d!\nYour reputation: Military:%d Oligarchy:%d People:%d\nNational Budget:$%f billion.\n",user->turns,user->military,user->oligarchy,user->people,user->money);
