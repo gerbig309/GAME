@@ -65,6 +65,7 @@ int coup(){
     
 
 int RNG(){ // assign a variable like so: n = RNG()
+  //returns some value between 0 to 99
   time_t t;
   srand((unsigned) time(&t));
   if (t < 0) t = -t;
@@ -76,7 +77,7 @@ void turnEnd(){
   printf("Your reputation: Military:%d Oligarchy:%d People:%d\n"
          "\nTurn number:%d\n",user->military,user->oligarchy,user->people,,user->turns);
 }
-
+/* will probably replace the other implemenations of standard input
 int parseArg(){
   char[5] input;
   while(scanf("%c", input) != EOF){
@@ -93,7 +94,8 @@ int parseArg(){
     return -1;
   }
 }
-
+*/
+/*
   int EventPrototype () {
     if (arguements are invalid) return -1;
     printf("the situation");
@@ -120,7 +122,7 @@ int parseArg(){
     printf("options: yes/no/quit");
     return -1;
     }
-        
+ */       
    int typeEvent (int* eventNumber){
      // prompts which type of event is wanted and changes what value the random number generater generates based on the response
     char response [5];
