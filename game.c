@@ -18,6 +18,33 @@
    
   };
   typedef struct_player player;
+/* syntax for array of events
+typedef void (*eventFunction)(int x);
+
+void event1 ()
+{
+    printf("Function a: %d\n", x);
+}
+
+void event2 ()
+{
+    printf("Function b: %d\n", x);
+}
+
+int main(int argc, char **argv)
+{
+    eventFunction *eventArray = (eventFunction *)malloc(sizeof(eventFunction*) * 2);
+    eventArray[0] = (eventFunction)&event1;
+    eventArray[1] = (eventFunction)&event2;
+
+    eventArray[0]();
+    eventArray[1]();
+
+    return 0;
+}
+
+*/
+
 
 int coup(){
   int threshold = 3 + user->turns / 5;
