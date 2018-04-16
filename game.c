@@ -3,7 +3,7 @@
 #include<time.h>
 
 //Player Structer 
-  //keeps track of Money, Approval by sects, turn country,
+  //keeps track of Approval by sects, turn country,
   
 //Each event is its own function with two outcomes
   //Call event is also function
@@ -66,11 +66,9 @@ int parseArg(){
       return -1;
     }
   }
-  if(strcmp(input, "yes")) return 1;
-  if(strcmp(input, "no")) return 2;
-  if(strcmp(input, "1")) return 3;
-  if(strcmp(input, "2")) return 4;
-  if(strcmp(input, "quit")) return 5;
+  if(strcmp(input, "1")) return 1;
+  if(strcmp(input, "2")) return 2;
+  if(strcmp(input, "quit")) return -2;
   else{
     printf("Your options are 1, 2, yes, no, or quit. Only enter lower case please.\n");
     return -1;
@@ -103,20 +101,6 @@ int parseArg(){
     printf("options: yes/no/quit");
     return -1;
     }
-  }
-
-  int EventSelect (int n) {
-    // int n is a randomly generated number
-  if (n!= "acceptable value") return -1;
-  // protection
-    //determines which event will be run
-  if (n==100) {
-  event1();
-  return event1();
-    //cascading error returns
-  }
-  }
-
    int typeEvent (int* eventNumber){
      // prompts which type of event is wanted and changes what value the random number generater generates based on the response
     char response [5];
@@ -154,24 +138,24 @@ int parseArg(){
     user->turns = 1; //Initialize player stats
     printf("Welcome to our game! In this, you are a dictator trying not to be overthrown. To do this, you will have to make decisions to balance your reputaion between the people, military, and the oligarchy. Each turn you will decide where you want to go, and based on the location, be given an event that you will respond to. Based on your response, your reputation with each faction will change. The lower yor reputation with any given faction, the more likely you will be overthrown. The game gets more difficult over time, and the longer your reign, the better you must maintain your reputation. The goal of the game is to last as long as possible without being overthrown. Good luck!\n");
     
-  int err=0;
+  int typeErr=0;
   int random;
+  int eventErr
   int eventNumber=-1;
   while (1){ //Starts loop to play game. Loop will continue until fail condition met
-  err = typeEvent(&eventNumber);
+  typeErr = typeEvent(&eventNumber);
     //propts user with which sect to see in your office
-     if(err==0 && eventNumber >=0){
+     if(typeErr==0 && eventNumber >=0){
        //if typeEvent is successful continue if not keep looping and calling typeEvent
-       while(err!=1){
+       while(typeErr!=1){
          // err=1 denotes a successful iteration of eventSelect
-       err=eventSelect(eventNumber);
-         if(err==-2) break;
-         else 
+       eventErr=f[eventNumber](player (*user));
+         if(eventErr==-2) break;
        }
+       if(typeErr||eventErr==-2)break;
      }
-  if (err == -2){
+    //only way out tof the loop is quitting or losing
     printf("You made it all the way to turn %d!\nYour reputation: Military:%d Oligarchy:%d People:%d\nNational Budget:$%f billion.\n",user->turns,user->military,user->oligarchy,user->people,user->money);
-  }
     free(user);
     return 0;
   }
