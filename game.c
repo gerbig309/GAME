@@ -1,8 +1,9 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
-#include<_______________> //whatever we call the h file
-
+#include<string.h>
+/*#include<_______________> //whatever we call the h file
+ */
   
   // fgets() or getchar() instead of scanf()?
 
@@ -17,7 +18,7 @@ typedef struct _player player;
 
 
 int eparseArg(){
-  char[5] input;
+  char input[5];
   while(scanf("%c", input) != EOF){
     if(strlen(input) > 5){
       printf("Your options are yes, no, or quit. Only enter lower case please.\n");
@@ -74,7 +75,7 @@ int event1(player * user) {
   if(err == 2){
     user->military -= 1;
     user->people += 1;
-    printf("The 99% are happy to have a win every once in a while.\n");
+    printf("The 99 percent are happy to have a win every once in a while.\n");
     return 0;
   }
   if(err == 3) return -2;
@@ -136,7 +137,7 @@ int event4(player * user) {
   if(err == 1){
     user->military -= 2;
     user->oligarchy += 1;
-    user->people +1 1;
+    user->people += 1;
     printf("The UN is please with your choice, but your pile of hate mail from the troops is quite a bit bigger this week.\n");
     return 0;
   }
@@ -158,7 +159,7 @@ int event5(player * user) {
   }
   if(err == 1){
     user->oligarchy -= 1;
-    user->people +1 1;
+    user->people += 1;
     printf("Standing up for the little guy, look at you go.\n");
     return 0;
   }
@@ -380,25 +381,27 @@ typedef int (*f)(player (*user));                 //declare typdef
 //not currently  scaled for full implementation, just proof of concept/syntax
 // in actual implementation events will exist in their own library for scalable implementation
 
-f func[15] = {&event0, &event1, &event2, &event3, &event4, &event5, &event6, &event7, &event8, &event9, &event10, &event11, &event12, &event13, &event14};      //make array func of type f,
+f eList[15] = {&event0, &event1, &event2, &event3, &event4, &event5, &event6, &event7, &event8, &event9, &event10, &event11, &event12, &event13, &event14};      //make array func of type f,
                                             //the pointer to a function
-int coup(){
+int RNG();
+
+int coup(player * user){
   int threshold = 3 + user->turns / 5;
   int badnews = RNG();
   if(user->military <= threshold){
-    if(badnews < 20 + 10(user->turns / 5)){
+    if(badnews < (20 + 10 * (user->turns / 5))){
       printf("The military revolts!");
       return -2;
     }
   }
   if(user->oligarchy <= threshold){
-    if(badnews < 20 + 10(user->turns / 5)){
+    if(badnews < (20 + 10 * (user->turns / 5))){
       printf("The oligarchy revolts!");
       return -2;
     }
   }
   if(user->people <= threshold){
-    if(badnews < 20 + 10(user->turns / 5)){
+    if(badnews < (20 + 10 * (user->turns / 5))){
       printf("The people revolt!");
       return -2;
     }
@@ -416,10 +419,10 @@ int RNG(){ // assign a variable like so: n = RNG()
   return t % 100;
 }
 
-void turnEnd(){
+void turnEnd(player * user){
   user->turns += 1;
   printf("Your reputation: Military:%d Oligarchy:%d People:%d\n"
-         "\nTurn number:%d\n",user->military,user->oligarchy,user->people,,user->turns);
+         "\nTurn number:%d\n",user->military,user->oligarchy,user->people,user->turns);
 }
 /* will probably replace the other implemenations of standard input
 int parseArg(){
@@ -469,26 +472,23 @@ int parseArg(){
  */       
    int typeEvent (int* eventNumber){
      // prompts which type of event is wanted and changes what value the random number generater generates based on the response
-    char response [5];
+    char * response;
     int random = RNG();
     printf("Type M to visit your miitary, O to visit your oligarchy, or P to visit the people.\n");
-     while(scanf("%c", &response) != EOF){
-       if(strlen(response) > 5) return -1;
-     }
-    // if -1 is returned don't change event number and call same event again
-    if (strngcmp (response,"M"){
-    *eventNumber= random % 5;
+    
+    if (strcmp(response,"M")){
+    *eventNumber = random % 5;
       return 0;
     }
-    if(strcmp(response,"O"){
+    if(strcmp(response,"O")){
       *eventNumber = random %5 + 5;
       return 0;
     }
-    if(strcmp(response,"P"){
+    if(strcmp(response,"P")){
       *eventNumber = random %5 + 10;
       return 0;
     }
-    if (strngcmp (response,"Q"){
+    if(strcmp(response,"Q")){
       return -2;
     }
     return -1;
@@ -496,7 +496,7 @@ int parseArg(){
         
         
   int main () {
-    user = (player *) malloc(sizeof(player));
+    player * user = (player *) malloc(sizeof(player));
     if(!user){
       printf("didn't create user correctly");
       return 0;
@@ -511,6 +511,8 @@ int parseArg(){
   int eventErr=0;
   int eventNumber=-1;
   int revolt = 0;
+  printf("%d, %d, %d, %d\n", user->military, user->oligarchy, user->people, user->turns);
+  
   while (1){ //Starts loop to play game. Loop will continue until fail condition met
   typeErr = typeEvent(&eventNumber);
     //propts user with which sect to see in your office
@@ -518,11 +520,11 @@ int parseArg(){
        //if typeEvent is successful continue if not keep looping and calling typeEvent
        while(1){
          // typeErr=1 denotes a successful iteration of typeEvent
-       eventErr=f[eventNumber](player (*user));
-       revolt=coup(player (*user));
+       eventErr = eList[eventNumber](user);
+       revolt=coup(user);
          if(eventErr==-2||revolt==-2) break;
          if(eventErr==1){
-           endTurn();
+           turnEnd(user);
            break;
          }
          //eventErr denotes a successful iteration of the event function
@@ -532,10 +534,11 @@ int parseArg(){
        if(typeErr==-2||eventErr==-2||revolt==-2)break;
      }
     //only way out of the loop is quitting or losing
-    printf("You made it all the way to turn %d!\nYour reputation: Military:%d Oligarchy:%d People:%d\nNational Budget:$%f billion.\n",user->turns,user->military,user->oligarchy,user->people,user->money);
+    printf("You made it all the way to turn %d!\nYour reputation: Military:%d Oligarchy:%d People:%d\n\n",user->turns,user->military,user->oligarchy,user->people);
     free(user);
     return 0;
   }
   }
   
   
+
