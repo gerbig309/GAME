@@ -3,6 +3,8 @@
 //Header File for dictator game ECEN1310 Final Project
 //Created by Nick Goralka and Shane Gerbig
 
+typedef struct _player player;
+
 //Event functions Called throughout the game
 int event0(player *user);
 int event1(player *user);
