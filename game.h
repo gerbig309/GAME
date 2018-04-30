@@ -21,7 +21,7 @@ int event11(player *user);
 int event12(player *user);
 int event13(player *user);
 int event14(player *user);
-//RNG creates a random number when called
+//RNG creates a random number between 0 and 99
 int RNG();
 /*
 -coup is checks if any of the favorablity points in your government fell bellow the threshold for you to loose
@@ -34,3 +34,18 @@ void turnEnd(player * user);
 //typeEvent is called to semirandomly select with event the players is prompted with. 
 //It asks which sect of their government they would like to see in their office.
 int typeEvent (int* eventNumber);
+//parseResponse reads the user's response and then provides a corresponding return value for their repsonse
+int parseResponse(char* response);
+//converts all letters to lowercase
+//whisper is called in parseResponse so that the users response doesn't need to be case sensitive
+int whisper (char *in, char *out);
+
+
+  
+  
+  
+  
+  
+  
+  
+  
