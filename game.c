@@ -2,18 +2,12 @@
 #include<stdlib.h>
 #include<time.h>
 #include<string.h>
+#include<assert.h>
 #include "game.h"
 
 #define BUFFERSIZE 10
 
-  struct _player{
-  int military; 
-  int oligarchy; 
-  int people; 
-  int turns;
-  };
-typedef struct _player player;
-
+ 
 int event0(player * user) {
   if(!user) return -1;
   char response[BUFFERSIZE];
@@ -386,10 +380,6 @@ int event14(player * user) {
 }
 }
 
-typedef int (*f)(player (*user));                 //declare typdef
-//not currently  scaled for full implementation, just proof of concept/syntax
-// in actual implementation events will exist in their own library for scalable implementation
-
 
 int parseResponse(char* response){
   if(!response) return -1;
@@ -496,4 +486,3 @@ void turnEnd(player * user){
   printf("Your reputation: Military:%d Oligarchy:%d People:%d\n"
          "\nTurn number:%d\n",user->military,user->oligarchy,user->people,user->turns);
 }
-
