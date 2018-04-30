@@ -6,6 +6,12 @@
 #include"game.h"
 
 #define BUFFERSIZE 10
+
+typedef int (*f)(player (*user));
+//declare typdef
+//not currently  scaled for full implementation, just proof of concept/syntax
+// in actual implementation events will exist in their own library for scalable implementation
+
 int main () {
     player * user = (player *) malloc(sizeof(player));
     if(!user){
