@@ -3,16 +3,9 @@
 #include<time.h>
 #include<string.h>
 #include<assert.h>
+#include"game.h"
 
 #define BUFFERSIZE 10
-
-//Will be header file: function declarations
-int readResponse(char* response);
-int parseResponse(char* response);
-int whisper (char *in, char *out);
-int RNG();
-int typeEvent (int* eventNumber);
-//
 
 struct _player{
   int military; 
