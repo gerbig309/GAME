@@ -1,9 +1,19 @@
-#ifndefine _GAME_H_
+#ifndef _GAME_H_
 #define _GAME_H_
+
+#endif
 //Header File for dictator game ECEN1310 Final Project
 //Created by Nick Goralka and Shane Gerbig
 
+struct _player{
+  int military; 
+  int oligarchy; 
+  int people; 
+  int turns;
+  }; 
+
 typedef struct _player player;
+
 
 //Event functions Called throughout the game
 int event0(player *user);
@@ -39,13 +49,3 @@ int parseResponse(char* response);
 //converts all letters to lowercase
 //whisper is called in parseResponse so that the users response doesn't need to be case sensitive
 int whisper (char *in, char *out);
-
-
-  
-  
-  
-  
-  
-  
-  
-  
