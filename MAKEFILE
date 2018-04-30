@@ -1,17 +1,20 @@
-# Variablee
 CC = gcc
-CFLAGS = -Wall -Wextra -std=cll -pedantic -g
-LDLIBS = -lm
-PROG = array_test
-SRC = $(PROG).c game.c
+CFLAGS = -Wall -Wextra -std=c11 -pedantic -g
+VALGRIND = valgrind --leak-check=full --show-reachable=yes --track-origins=yes
+
+PROG = game_play.c
+SRC = game_play.c game.c
 HDR = game.h
 OBJ = $(SRC:.c=.o)
 
-# Targets
 $(PROG): $(OBJ)
 $(OBJ): $(HDR)
 TAGS: $(SRC) $(HDR)
-        etags $^
-.PHONY: clean
+	etags $^
+.PHONY: clean check memcheck
 clean:
-        $(RM) $(PROG) $(OBJ)
+	$(RM) $(PROG) $(OBJ)
+check: $(PROG)
+	./$(PROG)
+memcheck: $(PROG)
+	$(VALGRIND) ./$(PROG)
