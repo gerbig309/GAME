@@ -2,10 +2,8 @@
 #include<stdlib.h>
 #include<time.h>
 #include<string.h>
-/*#include<_______________> //whatever we call the h file
- */
-  
-  // fgets() or getchar() instead of scanf()?
+
+#include "game.h"
 
 
   struct _player{
