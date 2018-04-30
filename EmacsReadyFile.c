@@ -530,7 +530,6 @@ int main () {
     typeErr=typeEvent(&eventNumber);
     if(typeErr==-2) break;
     if(typeErr==0){
-      printf("eventNumber= %d\n",eventNumber);
       while(1){
          // typeErr=1 denotes a successful iteration of typeEvent
        eventErr = eList[eventNumber](user);
@@ -547,8 +546,7 @@ int main () {
     }
      if(eventErr==-2||revolt==-2)break;
   }
-  //delete line bellow, for debugging purposes
-  printf("game over bitch\n");
+  printf("You made it all the way to turn %d!\nYour reputation: Military:%d Oligarchy:%d People:%d\n\n",user->turns,user->military,user->oligarchy,user->people);
   free(user);
   return 0;
 }
