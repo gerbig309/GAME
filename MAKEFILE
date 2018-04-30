@@ -1,9 +1,8 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c11 -pedantic -g
-VALGRIND = valgrind --leak-check=full --show-reachable=yes --track-origins=yes
+CFLAGS = -Wall -Wextra -std=c99 -pedantic -g
 
-PROG = game_play.c
-SRC = game_play.c game.c
+PROG = game_play
+SRC = game.c game_play.c
 HDR = game.h
 OBJ = $(SRC:.c=.o)
 
@@ -11,10 +10,8 @@ $(PROG): $(OBJ)
 $(OBJ): $(HDR)
 TAGS: $(SRC) $(HDR)
 	etags $^
-.PHONY: clean check memcheck
+tags: $(SRC) $(HDR)
+	ctags $^
+.PHONY: clean
 clean:
 	$(RM) $(PROG) $(OBJ)
-check: $(PROG)
-	./$(PROG)
-memcheck: $(PROG)
-	$(VALGRIND) ./$(PROG)
